@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.wxggt.dto.Practisequestion;
 import com.wxggt.util.TextList2Json;
-import com.wxggt.vo.Practisequestion;
 
 @WebServlet("/ReadFile")
 public class ReadFile extends HttpServlet {

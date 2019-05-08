@@ -8,7 +8,7 @@ import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
-import com.wxggt.vo.Practisequestion;
+import com.wxggt.dto.Practisequestion;
 
 /**
  * @author： alway

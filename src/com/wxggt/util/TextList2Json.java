@@ -7,7 +7,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wxggt.vo.Practisequestion;
+import com.wxggt.dto.Practisequestion;
 
 /**
  * @author :alway
