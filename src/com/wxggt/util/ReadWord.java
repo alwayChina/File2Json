@@ -26,7 +26,7 @@ public class ReadWord {
 	 * @param: @return      
 	 * @return: List<Practisequestion>
 	 */
-	public static List<Practisequestion> readDocx(InputStream inputStream) {
+	public static List<Practisequestion> readDocx(InputStream inputStream,int pId) {
 		List<Practisequestion> QList = new ArrayList<Practisequestion>();
 		try {
 				XWPFDocument docx = new XWPFDocument(inputStream);
@@ -39,13 +39,13 @@ public class ReadWord {
 					if (!txt.isEmpty()) {
 						strArray[index++] = txt.trim();
 					} else {
-						QList = packageQuestion(QList, strArray);
+						QList = packageQuestion(QList, strArray,pId);
 						strArray = new String[7];
 						index = 0;
 					}
 				}
 				if ((strArray.length > 0)) {
-					QList = packageQuestion(QList, strArray);
+					QList = packageQuestion(QList, strArray,pId);
 				}
 				docx.close();
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class ReadWord {
 	 * @param: @return      
 	 * @return: List<Practisequestion>
 	 */
-	public static List<Practisequestion> readDoc(InputStream inputStream) {
+	public static List<Practisequestion> readDoc(InputStream inputStream,int pId) {
 		List<Practisequestion> QList = new ArrayList<Practisequestion>();
 		try {
 				WordExtractor extractor = new WordExtractor(inputStream);
@@ -72,7 +72,7 @@ public class ReadWord {
 				for (String paragraph : paragraphs) {
 					String txt = WordExtractor.stripFields(paragraph).replaceAll("\r|\n", "");
 					if (txt.isEmpty()) {
-						QList = packageQuestion(QList, strArray);
+						QList = packageQuestion(QList, strArray,pId);
 						strArray = new String[7];
 						index = 0;
 					} else {
@@ -80,16 +80,27 @@ public class ReadWord {
 						index++;
 					}
 				}
-				QList = packageQuestion(QList, strArray);
+				QList = packageQuestion(QList, strArray,pId);
 				extractor.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		for (Practisequestion p : QList) {
+			System.out.println(p.getQuestion());
+			System.out.println(p.getA());
+			System.out.println(p.getB());
+			System.out.println(p.getC());
+			System.out.println(p.getD());
+			System.out.println(p.getRightAnswer());
+			System.out.println(p.getqAnalyze());
+			System.out.println();
+		}
 		return QList;
 	}
 
-	public static List<Practisequestion> packageQuestion(List<Practisequestion> QList, String[] strArray) {
+	public static List<Practisequestion> packageQuestion(List<Practisequestion> QList, String[] strArray,int pId) {
 		Practisequestion practisequestion = new Practisequestion();
+		practisequestion.setPid(pId);
 		practisequestion.setQuestion(strArray[0]);
 		practisequestion.setA(strArray[1]);
 		practisequestion.setB(strArray[2]);

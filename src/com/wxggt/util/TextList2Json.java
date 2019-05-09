@@ -1,12 +1,10 @@
 package com.wxggt.util;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.wxggt.dto.Practisequestion;
 
 /**
@@ -15,61 +13,35 @@ import com.wxggt.dto.Practisequestion;
  * @date :2019年5月5日
  */
 public class TextList2Json {
-	
+
 	/**
 	 * 
-	 * @Title: readFile   
-	 * @Description: Get the InputStream from the Internet,and judge what kind of file it is,then turn to the method.
-	 * @param: @param path
-	 * @param: @return      
-	 * @return: List<Practisequestion>
+	 * @Title readFile
+	 * @Description Get the InputStream from the servlet,and judge what kind of file
+	 *              it is,then turn to the method.
+	 * @param inputStream
+	 * @param fileExtraName
+	 * @param pId
+	 * @return
 	 */
-	public static List<Practisequestion> readFile(String path) {
+	public String readFile(InputStream inputStream, String fileExtraName, int pId) {
 		try {
-			int HttpResult; // 服务器返回的状态
-			URL url;
-			url = new URL(path);
-			// 创建URL
-			URLConnection urlconn = url.openConnection(); // 试图连接并取得返回状态码
-			urlconn.connect();
-			HttpURLConnection httpconn = (HttpURLConnection) urlconn;
-			HttpResult = httpconn.getResponseCode();
-			if (HttpResult != HttpURLConnection.HTTP_OK) {
-				System.out.print("无法连接到");
-				return null;
+			List<Practisequestion> QList = new ArrayList<Practisequestion>();
+			if ((".doc").equals(fileExtraName)) {
+				QList = ReadWord.readDoc(inputStream, pId);
+			} else if ((".docx").equals(fileExtraName)) {
+				QList = ReadWord.readDocx(inputStream, pId);
+			} else if ((".txt").equals(fileExtraName)) {
+				ReadTxt readfileEx = new ReadTxt();
+				QList = readfileEx.readFileText(inputStream, pId);
 			} else {
-				InputStream inputStream=urlconn.getInputStream();
-				List<Practisequestion> QList = new ArrayList<Practisequestion>();
-				if (path.endsWith(".doc")) {
-					QList = ReadWord.readDoc(inputStream);
-				} else if (path.endsWith("docx")) {
-					QList = ReadWord.readDocx(inputStream);
-				} else if (path.endsWith(".txt")) {
-					ReadTxt readfileEx = new ReadTxt();
-					QList = readfileEx.readFileText(path,inputStream);
-				} else {
-					System.out.println("文件类型错误");
-				}
-				return QList;
+				System.out.println("文件类型错误");
 			}
+			Gson gson = new Gson();
+			return gson.toJson(QList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	public static void main(String[] args) {
-		String filePath = "http://wxggt.oss-cn-beijing.aliyuncs.com/ReadFile/c.doc";
-		List<Practisequestion> QList = readFile(filePath);
-		for (Practisequestion p : QList) {
-			System.out.println(p.getQuestion());
-			System.out.println(p.getA());
-			System.out.println(p.getB());
-			System.out.println(p.getC());
-			System.out.println(p.getD());
-			System.out.println(p.getRightAnswer());
-			System.out.println(p.getqAnalyze());
-			System.out.println();
-		}
 	}
 }
