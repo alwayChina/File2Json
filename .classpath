@@ -12,7 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmlbeans-3.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-3.17.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-examples-3.17.jar"/>

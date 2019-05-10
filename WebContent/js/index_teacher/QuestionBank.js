@@ -12,7 +12,7 @@ $("#uploadButton").click(function() {
     var fd = new FormData();
     console.log("题库编号" + pId)
     fd.append("pId", pId);
-    fd.append("photo", $('#f')[0].files[0]);
+    fd.append("photo", $('#f').val());
     $.ajax({
 	url : 'ReadFile',
 	type : 'post',
